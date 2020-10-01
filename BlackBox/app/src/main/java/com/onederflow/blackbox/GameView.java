@@ -4,9 +4,11 @@ import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.os.Build;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
-
+import android.widget.Toast;
+import java.io.Console;
 import java.util.ArrayList;
 
 public class GameView extends SurfaceView implements Runnable{
@@ -16,12 +18,15 @@ public class GameView extends SurfaceView implements Runnable{
     public static float unitH = 0; // пикселей в юните по вертикали
     private boolean firstTime = true;
     private boolean gameRunning = true;
-    private Ship ship;
     private Thread gameThread = null;
+
+    private GameWorld gameWord;
+    private GameBall gameBall;
+
     private Paint paint;
+    private Paint paintRed = new Paint();
     private Canvas canvas;
     private SurfaceHolder surfaceHolder;
-    private ArrayList<Asteroid> asteroids = new ArrayList<>(); // тут будут харанится астероиды
     private final int ASTEROID_INTERVAL = 50; // время через которое появляются астероиды (в итерациях)
     private int currentTime = 0;
 
@@ -33,27 +38,17 @@ public class GameView extends SurfaceView implements Runnable{
         // инициализируем поток
         gameThread = new Thread(this);
         gameThread.start();
+        paintRed.setColor(Color.RED);
     }
 
     @Override
     public void run() {
         while (gameRunning) {
-            update();
             draw();
-            checkCollision();
-            checkIfNewAsteroid();
             control();
         }
     }
 
-    private void update() {
-        if(!firstTime) {
-            ship.update();
-            for (Asteroid asteroid : asteroids) {
-                asteroid.update();
-            }
-        }
-    }
 
     private void draw() {
         if (surfaceHolder.getSurface().isValid()) {  //проверяем валидный ли surface
@@ -63,17 +58,15 @@ public class GameView extends SurfaceView implements Runnable{
                 unitW = surfaceHolder.getSurfaceFrame().width()/maxX; // вычисляем число пикселей в юните
                 unitH = surfaceHolder.getSurfaceFrame().height()/maxY;
 
-                ship = new Ship(getContext()); // добавляем корабль
+                gameBall = new GameBall(getContext());
+                gameWord = new GameWorld(getContext());
             }
 
             canvas = surfaceHolder.lockCanvas(); // закрываем canvas
             canvas.drawColor(Color.BLACK); // заполняем фон чёрным
 
-            ship.drow(paint, canvas); // рисуем корабль
-
-            for(Asteroid asteroid: asteroids){ // рисуем астероиды
-                asteroid.drow(paint, canvas);
-            }
+            gameWord.draw(canvas);
+            gameBall.draw(canvas);
 
             surfaceHolder.unlockCanvasAndPost(canvas); // открываем canvas
         }
@@ -81,30 +74,16 @@ public class GameView extends SurfaceView implements Runnable{
 
     private void control() { // пауза на 17 миллисекунд
         try {
-            gameThread.sleep(17);
+            gameThread.sleep(16);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
     }
 
-    private void checkCollision(){ // перебираем все астероиды и проверяем не касается ли один из них корабля
-        for (Asteroid asteroid : asteroids) {
-            if(asteroid.isCollision(ship.x, ship.y, ship.size)){
-                // игрок проиграл
-                gameRunning = false; // останавливаем игру
-                // TODO добавить анимацию взрыва
-            }
-        }
-    }
 
-    private void checkIfNewAsteroid(){ // каждые 50 итераций добавляем новый астероид
-        if(currentTime >= ASTEROID_INTERVAL){
-            Asteroid asteroid = new Asteroid(getContext());
-            asteroids.add(asteroid);
-            currentTime = 0;
-        }else{
-            currentTime ++;
-        }
+    public void ClickRegistered(){
+        System.out.println("Click");
+       // gameRoad.newRevolution();
     }
 
 }

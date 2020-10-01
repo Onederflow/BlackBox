@@ -1,58 +1,67 @@
 package com.onederflow.blackbox;
 
 import android.os.Bundle;
+
 import androidx.appcompat.app.AppCompatActivity;
+
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
 
-public class GameActivity extends AppCompatActivity implements View.OnTouchListener{
+public class GameActivity extends AppCompatActivity implements View.OnTouchListener {
 
-    public static boolean isLeftPressed = false; // нажата левая кнопка
-    public static boolean isRightPressed = false; // нажата правая кнопка
+    private float x;
+    private float y;
+
+    GameView gameView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game);
 
-        GameView gameView = new GameView(this); // создаём gameView
+        gameView = new GameView(this); // создаём gameView
 
         LinearLayout gameLayout = (LinearLayout) findViewById(R.id.gameLayout); // находим gameLayout
         gameLayout.addView(gameView); // и добавляем в него gameView
-
-        Button leftButton = (Button) findViewById(R.id.leftButton); // находим кнопки
-        Button rightButton = (Button) findViewById(R.id.rightButton);
-
-        leftButton.setOnTouchListener(this); // и добавляем этот класс как слушателя (при нажатии сработает onTouch)
-        rightButton.setOnTouchListener(this);
+        gameLayout.setOnTouchListener(this); // и добавляем этот класс как слушателя (при нажатии сработает onTouch)
     }
 
+    /*
+        public boolean onTouch(View v, MotionEvent event) {
+            x = event.getX();
+            y = event.getY();
+
+            switch (event.getAction()) {
+                case MotionEvent.ACTION_DOWN: // нажатие
+                    break;
+                case MotionEvent.ACTION_MOVE: // движение
+                    break;
+                case MotionEvent.ACTION_UP: // отпускание
+                    gameView.ClickRegistered();
+                    return false;
+                case MotionEvent.ACTION_CANCEL:
+                    break;
+            }
+            return true;
+        }
+    */
     public boolean onTouch(View button, MotionEvent motion) {
-        switch(button.getId()) { // определяем какая кнопка
-            case R.id.leftButton:
+        switch (button.getId()) { // определяем какая кнопка
+            case R.id.gameLayout:
                 switch (motion.getAction()) { // определяем нажата или отпущена
                     case MotionEvent.ACTION_DOWN:
-                        isLeftPressed = true;
+                        System.out.println("\n\n12313123\n\n");
                         break;
                     case MotionEvent.ACTION_UP:
-                        isLeftPressed = false;
-                        break;
-                }
-                break;
-            case R.id.rightButton:
-                switch (motion.getAction()) { // определяем нажата или отпущена
-                    case MotionEvent.ACTION_DOWN:
-                        isRightPressed = true;
-                        break;
-                    case MotionEvent.ACTION_UP:
-                        isRightPressed = false;
+                        gameView.ClickRegistered();
+                        System.out.println("\n\n12313123\n\n");
                         break;
                 }
                 break;
         }
         return true;
     }
-
 }
