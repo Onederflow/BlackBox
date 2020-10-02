@@ -8,16 +8,18 @@ import android.os.Build;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.widget.Toast;
+
 import java.io.Console;
 import java.util.ArrayList;
 
-public class GameView extends SurfaceView implements Runnable{
+public class GameView extends SurfaceView implements Runnable {
     public static int maxX = 20; // размер по горизонтали
     public static int maxY = 28; // размер по вертикали
     public static float unitW = 0; // пикселей в юните по горизонтали
     public static float unitH = 0; // пикселей в юните по вертикали
     private boolean firstTime = true;
-    private boolean gameRunning = true;
+    public boolean gameRunning = true;
+    public boolean gameOver = false;
     private Thread gameThread = null;
 
     private GameWorld gameWord;
@@ -27,8 +29,6 @@ public class GameView extends SurfaceView implements Runnable{
     private Paint paintRed = new Paint();
     private Canvas canvas;
     private SurfaceHolder surfaceHolder;
-    private final int ASTEROID_INTERVAL = 50; // время через которое появляются астероиды (в итерациях)
-    private int currentTime = 0;
 
     public GameView(Context context) {
         super(context);
@@ -51,39 +51,64 @@ public class GameView extends SurfaceView implements Runnable{
 
 
     private void draw() {
-        if (surfaceHolder.getSurface().isValid()) {  //проверяем валидный ли surface
+        if (surfaceHolder.getSurface().isValid()) {  //if surface is valid
 
-            if(firstTime){ // инициализация при первом запуске
-                firstTime = false;
-                unitW = surfaceHolder.getSurfaceFrame().width()/maxX; // вычисляем число пикселей в юните
-                unitH = surfaceHolder.getSurfaceFrame().height()/maxY;
-
-                gameBall = new GameBall(getContext());
-                gameWord = new GameWorld(getContext());
+            if (firstTime) { // start
+                init();
             }
+            if(!gameOver) {
+                canvas = surfaceHolder.lockCanvas(); // close canvas
+                canvas.drawColor(Color.BLACK); // set background to black
+                gameOver = !gameWord.newIteration();
+                gameWord.draw(canvas);
+                gameBall.draw(canvas);
 
-            canvas = surfaceHolder.lockCanvas(); // закрываем canvas
-            canvas.drawColor(Color.BLACK); // заполняем фон чёрным
-
-            gameWord.draw(canvas);
-            gameBall.draw(canvas);
-
-            surfaceHolder.unlockCanvasAndPost(canvas); // открываем canvas
+                if (gameOver) {
+                    drawGameOver();
+                }
+                surfaceHolder.unlockCanvasAndPost(canvas); // открываем canvas
+            }
         }
+    }
+
+    private void init() {
+        firstTime = false;
+        unitW = surfaceHolder.getSurfaceFrame().width() / maxX;
+        unitH = surfaceHolder.getSurfaceFrame().height() / maxY;
+
+        gameBall = new GameBall(getContext());
+        gameWord = new GameWorld(getContext());
     }
 
     private void control() { // пауза на 17 миллисекунд
         try {
-            gameThread.sleep(16);
+            gameThread.sleep(17);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
     }
 
 
-    public void ClickRegistered(){
-        System.out.println("Click");
-       // gameRoad.newRevolution();
+    public void ClickRegistered() {
+        if (!gameOver) {
+            gameWord.click();
+        } else {
+            firstTime = true;
+            init();
+            gameOver = false;
+            draw();
+        }
     }
+
+    public void drawGameOver() {
+        canvas.drawColor(Color.YELLOW);
+        Paint paintx = new Paint();
+        paintx.setColor(Color.BLACK);
+        paintx.setTextSize(200);
+        canvas.drawText("Game over!", 50, 400, paintx);
+        paintx.setTextSize(140);
+        canvas.drawText("Click to restart", 70, 600, paintx);
+    }
+
 
 }
