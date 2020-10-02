@@ -2,6 +2,8 @@ package com.onederflow.blackbox;
 
 import android.content.Context;
 import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.Paint;
 
 public class GameWorld {
 
@@ -19,6 +21,10 @@ public class GameWorld {
     private WorldLayer[] layers;
     private GameBlocks gameBlocks;
 
+    //
+    private String score = "score";
+    private Paint paint = new Paint();
+
     public GameWorld(Context context, int set_tick_count) {
         tick_count = set_tick_count;
         layers = new WorldLayer[5];
@@ -29,6 +35,8 @@ public class GameWorld {
         layers[4] = new WorldLayer(context, R.drawable.back6,R.drawable.downback6, 0.0f, GameView.maxX, (int) GameView.unitH);
 
         gameBlocks = new GameBlocks(context);
+        paint.setColor(Color.BLUE);
+        paint.setTextSize(70);
     }
 
     public void draw(Canvas canvas) {
@@ -40,6 +48,9 @@ public class GameWorld {
 
         gameBlocks.setPosition(unitProgress);
         gameBlocks.draw(canvas);
+
+        String score = "score " + (int)(progress);
+        canvas.drawText(score, 9.7f * GameView.unitH, 1 * GameView.unitH, paint);
     }
 
     public boolean newIteration() {

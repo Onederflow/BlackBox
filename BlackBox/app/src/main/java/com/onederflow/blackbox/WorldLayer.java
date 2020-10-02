@@ -3,19 +3,11 @@ package com.onederflow.blackbox;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
-import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
-import android.graphics.drawable.VectorDrawable;
-
-import androidx.annotation.Nullable;
 import androidx.appcompat.widget.AppCompatDrawableManager;
-import androidx.vectordrawable.graphics.drawable.VectorDrawableCompat;
-
-import javax.crypto.Cipher;
 
 public class WorldLayer {
     private static final int DEFAULT_DRAWABLE_SIZE = 1;

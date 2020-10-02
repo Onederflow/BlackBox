@@ -1,7 +1,5 @@
 package com.onederflow.blackbox;
 
-import android.graphics.Canvas;
-
 import java.util.Random;
 
 public class Block {
@@ -44,7 +42,6 @@ public class Block {
             }
         }
     }
-
 
     public void swap(){
         int temp = topType;

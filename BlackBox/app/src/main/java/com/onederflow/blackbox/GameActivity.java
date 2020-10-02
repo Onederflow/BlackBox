@@ -21,43 +21,20 @@ public class GameActivity extends AppCompatActivity implements View.OnTouchListe
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game);
-
-        gameView = new GameView(this); // создаём gameView
-
-        LinearLayout gameLayout = (LinearLayout) findViewById(R.id.gameLayout); // находим gameLayout
-        gameLayout.addView(gameView); // и добавляем в него gameView
-        gameLayout.setOnTouchListener(this); // и добавляем этот класс как слушателя (при нажатии сработает onTouch)
+        gameView = new GameView(this); // creation gameView
+        LinearLayout gameLayout = (LinearLayout) findViewById(R.id.gameLayout); // found gameLayout
+        gameLayout.addView(gameView); // add to gameView
+        gameLayout.setOnTouchListener(this);
     }
 
-    /*
-        public boolean onTouch(View v, MotionEvent event) {
-            x = event.getX();
-            y = event.getY();
-
-            switch (event.getAction()) {
-                case MotionEvent.ACTION_DOWN: // нажатие
-                    break;
-                case MotionEvent.ACTION_MOVE: // движение
-                    break;
-                case MotionEvent.ACTION_UP: // отпускание
-                    gameView.ClickRegistered();
-                    return false;
-                case MotionEvent.ACTION_CANCEL:
-                    break;
-            }
-            return true;
-        }
-    */
     public boolean onTouch(View button, MotionEvent motion) {
-        switch (button.getId()) { // определяем какая кнопка
+        switch (button.getId()) {
             case R.id.gameLayout:
-                switch (motion.getAction()) { // определяем нажата или отпущена
+                switch (motion.getAction()) {
                     case MotionEvent.ACTION_DOWN:
-                        System.out.println("\n\n12313123\n\n");
                         break;
                     case MotionEvent.ACTION_UP:
                         gameView.ClickRegistered();
-                        System.out.println("\n\n12313123\n\n");
                         break;
                 }
                 break;

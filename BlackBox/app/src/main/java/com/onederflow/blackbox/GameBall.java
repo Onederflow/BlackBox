@@ -16,10 +16,10 @@ public class GameBall {
     //for drawing
     private int color_main = Color.RED;
     private Paint paint;
-    protected int[] bitmapId; // id картинки
-    protected Bitmap[] bitmap; // картинка
-    protected int[] bitmapRefId; // id картинки
-    protected Bitmap[] bitmapRef; // картинка
+    protected int[] bitmapId; // id of pictures
+    protected Bitmap[] bitmap; // pictures
+    protected int[] bitmapRefId; // if of pictures
+    protected Bitmap[] bitmapRef; // pictures
     private int a_height;
 
     public GameBall(Context context) {
@@ -62,13 +62,11 @@ public class GameBall {
         }
     }
 
-
     public void draw(Canvas canvas) { // рисуем картинку
         timerTickIncrease();
         canvas.drawBitmap(bitmap[timerTicksNow * 2], 2 * GameView.unitH,  10 * GameView.unitH - a_height, paint);
         canvas.drawBitmap(bitmapRef[timerTicksNow * 2], 2 * GameView.unitH,  10 * GameView.unitH , paint);
     }
-
 
     private void timerTickIncrease() {
         timerTicksNow++;

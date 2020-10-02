@@ -30,10 +30,10 @@ public class GameBlocks {
     //for drawing
     private int color_main = Color.RED;
     private Paint paint;
-    protected int[] bitmapIdRed; // id картинки
-    protected Bitmap bitmapRed; // картинка
-    protected int[] bitmapIdBlue; // id картинки
-    protected Bitmap bitmapBlue; // картинка
+    protected int[] bitmapIdRed; // id
+    protected Bitmap bitmapRed; // picture
+    protected int[] bitmapIdBlue; // id
+    protected Bitmap bitmapBlue; // picture
 
     private int i_gen = 0;
     private  int i_max = 6;
