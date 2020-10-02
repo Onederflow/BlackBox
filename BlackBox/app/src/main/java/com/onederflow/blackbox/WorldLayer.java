@@ -59,7 +59,6 @@ public class WorldLayer {
     }
 
     public void draw(Canvas canvas) { // рисуем картинку
-
         float pos_x = ((unitProgress * speed) % unitWidth);
         canvas.drawBitmap(firstBitmap, -pos_x * GameView.unitH, 0, paint);
         canvas.drawBitmap(firstBitmap, (unitWidth - pos_x + 0.0f) * realMax, 0, paint);

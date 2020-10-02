@@ -30,8 +30,8 @@ public class GameWorld {
         layers = new WorldLayer[5];
         layers[0] = new WorldLayer(context, R.drawable.back2, R.drawable.downback2, 1.0f, GameView.maxX, (int) GameView.unitH);
         layers[1] = new WorldLayer(context, R.drawable.back3, R.drawable.downback3, 0.4f, GameView.maxX, (int) GameView.unitH);
-        layers[2] = new WorldLayer(context, R.drawable.back5, R.drawable.downback4, 0.2f, GameView.maxX, (int) GameView.unitH);
-        layers[3] = new WorldLayer(context, R.drawable.back4, R.drawable.back5, 0.05f, GameView.maxX, (int) GameView.unitH);
+        layers[2] = new WorldLayer(context, R.drawable.back5, R.drawable.back5, 0.2f, GameView.maxX, (int) GameView.unitH);
+        layers[3] = new WorldLayer(context, R.drawable.back4, R.drawable.downback4, 0.05f, GameView.maxX, (int) GameView.unitH);
         layers[4] = new WorldLayer(context, R.drawable.back6,R.drawable.downback6, 0.0f, GameView.maxX, (int) GameView.unitH);
 
         gameBlocks = new GameBlocks(context);
