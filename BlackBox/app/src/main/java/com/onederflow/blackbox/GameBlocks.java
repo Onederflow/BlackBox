@@ -64,7 +64,7 @@ public class GameBlocks {
 
     public void newGen(int pos) {
 
-        blocks[i_gen].newGen(pos, 90);
+        blocks[i_gen].newGen(pos, 95);
         i_gen++;
         if (i_gen >= i_max) {
             i_gen = 0;
