@@ -13,7 +13,7 @@ import androidx.appcompat.widget.AppCompatDrawableManager;
 import java.util.ArrayList;
 
 public class GameBlocks {
-    private ArrayList<Block> blocks;
+    private Block[] blocks;
     private float realPos = 0;
 
     private float unitWidth = 1;
@@ -35,8 +35,14 @@ public class GameBlocks {
     protected int[] bitmapIdBlue; // id картинки
     protected Bitmap bitmapBlue; // картинка
 
+    private int i_gen = 0;
+    private  int i_max = 6;
+
     public GameBlocks(Context context) {
-        blocks = new ArrayList<Block>();
+        blocks = new Block[i_max];
+        for(int i = 0; i < i_max; i++){
+            blocks[i] = new Block(0, 0);
+        }
 
         paint = new Paint();
         paint.setColor(color_main);
@@ -57,25 +63,25 @@ public class GameBlocks {
     }
 
     public void newGen(int pos) {
-        if (blocks.size() > 10) {
-            blocks.remove(0);
+
+        blocks[i_gen].newGen(pos, 90);
+        i_gen++;
+        if (i_gen >= i_max) {
+            i_gen = 0;
         }
-        blocks.add(new Block(pos, 90));
     }
 
     public void draw(Canvas canvas) {
         for (Block block : blocks) {
-            float pos_x = (float) ((block.position * (0.1f * 30.0) - realPos)) - x_different;
+            float pos_x = (float) ((block.position * (0.2f * 15.0) - realPos)) - x_different;
             if(block.topType == 1){
                 canvas.drawBitmap(bitmapBlue, (pos_x ) * GameView.unitH, (int)((10.0 - unitHeight) * GameView.unitH), paint);
-            }
-            if(block.topType == 2){
+            } else if(block.topType == 2){
                 canvas.drawBitmap(bitmapRed, (pos_x ) * GameView.unitH, (int)((10.0 - unitHeight) * GameView.unitH), paint);
             }
             if(block.sideType == 1){
                 canvas.drawBitmap(bitmapBlue, (pos_x ) * GameView.unitH, 10.0f * GameView.unitH, paint);
-            }
-            if(block.sideType == 2){
+            } else if(block.sideType == 2){
                 canvas.drawBitmap(bitmapRed, (pos_x ) * GameView.unitH, 10.0f * GameView.unitH, paint);
             }
         };

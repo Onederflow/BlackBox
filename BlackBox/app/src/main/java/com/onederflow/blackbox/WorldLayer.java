@@ -54,11 +54,11 @@ public class WorldLayer {
         unitWidth = unitHeight * (float) drawable.getIntrinsicWidth() / (float) drawable.getIntrinsicHeight();
         realHeight = (int) (unitHeight * realMax);
         realWidth = (int) (unitWidth * realMax);
-        firstBitmap = Custom.getBitmapFromDrawable(drawable, realWidth + 2, realHeight);
+        firstBitmap = Custom.getBitmapFromDrawable(drawable, realWidth + 3, realHeight);
 
         @SuppressLint("RestrictedApi") Drawable drawabledown = AppCompatDrawableManager.get().getDrawable(context, downID);
         unitWidth = unitHeight * (float) drawable.getIntrinsicWidth() / (float) drawable.getIntrinsicHeight();
-        reflectBitmap = Custom.getBitmapFromDrawable(drawabledown, realWidth + 2, realHeight);
+        reflectBitmap = Custom.getBitmapFromDrawable(drawabledown, realWidth + 3, realHeight);
         reflectBitmap = Custom.flipImage(reflectBitmap, 121);
     }
 

@@ -60,6 +60,8 @@ public class GameView extends SurfaceView implements Runnable {
                 canvas = surfaceHolder.lockCanvas(); // close canvas
                 canvas.drawColor(Color.BLACK); // set background to black
                 gameOver = !gameWord.newIteration();
+
+                gameWord.tick_now = gameBall.timerTicksNow;
                 gameWord.draw(canvas);
                 gameBall.draw(canvas);
 
@@ -77,12 +79,12 @@ public class GameView extends SurfaceView implements Runnable {
         unitH = surfaceHolder.getSurfaceFrame().height() / maxY;
 
         gameBall = new GameBall(getContext());
-        gameWord = new GameWorld(getContext());
+        gameWord = new GameWorld(getContext(), gameBall.timerTicksCount);
     }
 
     private void control() { // пауза на 17 миллисекунд
         try {
-            gameThread.sleep(17);
+            gameThread.sleep(10);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }

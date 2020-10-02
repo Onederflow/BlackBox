@@ -10,8 +10,8 @@ import android.graphics.Paint;
 public class GameBall {
     //variables
     private float jumpHeight = 2f;
-    private int timerTicksCount = 29;
-    private int timerTicksNow = 0;
+    public int timerTicksCount = 14;
+    public int timerTicksNow = 0;
 
     //for drawing
     private int color_main = Color.RED;
@@ -65,8 +65,8 @@ public class GameBall {
 
     public void draw(Canvas canvas) { // рисуем картинку
         timerTickIncrease();
-        canvas.drawBitmap(bitmap[timerTicksNow], 2 * GameView.unitH,  10 * GameView.unitH - a_height, paint);
-        canvas.drawBitmap(bitmapRef[timerTicksNow], 2 * GameView.unitH,  10 * GameView.unitH , paint);
+        canvas.drawBitmap(bitmap[timerTicksNow * 2], 2 * GameView.unitH,  10 * GameView.unitH - a_height, paint);
+        canvas.drawBitmap(bitmapRef[timerTicksNow * 2], 2 * GameView.unitH,  10 * GameView.unitH , paint);
     }
 
 

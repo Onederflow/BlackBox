@@ -13,11 +13,13 @@ public class Block {
     private Random random = new Random();
 
     public Block(int pos, int complexity) {
-        newGen(complexity);
-        position = pos;
+        newGen(pos, complexity);
     }
 
-    public void newGen(int complexity) {
+    public void newGen(int pos ,int complexity) {
+        topType = 0;
+        sideType = 0;
+        position = pos;
         int type = 0;
         int value = random.nextInt(100);
         if (complexity / 2 >= value) {
@@ -32,9 +34,7 @@ public class Block {
             } else {
                 sideType = random.nextInt(2) + 1;
             }
-        }
-
-        if (type == 2) {
+        } else if (type == 2) {
             if (random.nextBoolean()) {
                 topType = 1;
                 sideType = 2;

@@ -7,18 +7,20 @@ public class GameWorld {
 
     //game characteristics
     public float progress = 0;
-    private float increase = 0.1f;
+    private float increase = 0.2f;
     private float alpha = 1;
 
-    private int iteration = 15;
-    private int cchangeit = 30;
-    private int unitOneIter = 1;
+    private int iteration = 0;
+    private int tick_count = 0;
+    public int tick_now = 0;
+    private int unitOneIter = 2;
 
     //world`s layers
     private WorldLayer[] layers;
     private GameBlocks gameBlocks;
 
-    public GameWorld(Context context) {
+    public GameWorld(Context context, int set_tick_count) {
+        tick_count = set_tick_count;
         layers = new WorldLayer[5];
         layers[0] = new WorldLayer(context, R.drawable.back2, R.drawable.downback2, 1.0f, GameView.maxX, (int) GameView.unitH);
         layers[1] = new WorldLayer(context, R.drawable.back3, R.drawable.downback3, 0.4f, GameView.maxX, (int) GameView.unitH);
@@ -43,13 +45,13 @@ public class GameWorld {
     public boolean newIteration() {
         progress += increase;
         iteration ++;
-        if(iteration % cchangeit == 0){
-            unitOneIter++;
-            gameBlocks.newGen(unitOneIter + 6);
+        if(tick_now == tick_count / 2){
             if(gameBlocks.isCollision(unitOneIter)){
                 increase = 0;
                 return false;
             }
+            unitOneIter++;
+            gameBlocks.newGen(unitOneIter + 5);
         }
         return true;
     }
